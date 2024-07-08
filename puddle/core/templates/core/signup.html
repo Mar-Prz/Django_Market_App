@@ -1,0 +1,45 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Sign Up{% endblock %}
+
+{% block content %}
+<div class="w-1/2 my-6 mx-auto p-6 bg-gray-100 rounded-xl">
+    <h1 class="mb-6 text-3xl">Sign Up</h1>
+
+    <form method="post" action="."> <!--action . it is the same page we are on-->
+        {% csrf_token %} <!--Django built in security to prevent csrf attack-->
+
+        <div class="mb-3">
+            <label class="inline-block mb-2">Username</label><br>
+            {{ form.username }}
+        </div>
+
+        <div class="mb-3">
+            <label class="inline-block mb-2">Email</label><br>
+            {{ form.email }}
+        </div>
+
+        <div class="mb-3">
+            <label class="inline-block mb-2">Password</label><br>
+            {{ form.password1 }}
+        </div>
+
+        <div class="mb-3">
+            <label class="inline-block mb-2">Repeat Password</label><br>
+            {{ form.password2 }}
+        </div>
+
+        {% if form.errors or form.non_field_errors %} <!---checks for form errors and erros not associated with a form field-->>
+        <div class="mb-3 p-6 bg-red-100 rounded-xl">
+            {% for field in form %} <!--loops through the form fiels and shows errors if there are any-->>
+                {{ field.errors }} 
+            {% endfor %}   
+            
+            {{ form.non_field_errors }} <!---shows if any non field errors exist-->>
+        </div>
+        {% endif %}
+
+        <button class="py-4 px-8 text-lg bg-teal-500 hover:bg-teal-700 rounded-xl text-white">Submit</button>
+    </form>
+</div>
+{% endblock %}
